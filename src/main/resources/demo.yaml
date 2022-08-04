@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Demo
+  version: '1.0'
+paths:
+  '/demo/ok':
+    post:
+      operationId: ok
+      requestBody:
+        content:
+#          application/json:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadFilesRequest'
+      responses:
+        '200':
+          description: OK
+          headers: { }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+components:
+  schemas:
+    UploadFilesRequest:
+      title: Upload several files
+      required:
+        - files
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/UploadFile'
+
+    UploadFile:
+      title: A file upload with some metadata
+      properties:
+        urgent:
+          type: boolean
+        filename:
+          type: string
+        data:
+          type: string
+#          format: base64
+          format: binary
+
+    UploadResponse:
+      title: A stub response
+      properties:
+        accepted:
+          type: boolean
+
